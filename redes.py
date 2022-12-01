@@ -13,13 +13,13 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from matplotlib.colors import ListedColormap
 from sklearn.neural_network import MLPClassifier 
 
-dataset = pd.read_csv("datosPesoCi3.csv",)
+dataset = pd.read_csv("dat_clientes.csv",)
 
-#Caracteristicas
-X = dataset[['peso','cirf']].values
+#Caracteristicas ingresos,gastos,decision
+X = dataset[['ingresos','gastos']].values
 
 #Clases
-y = dataset['clasificacion'].values
+y = dataset['decision'].values
 print(dataset.shape)
 print(dataset.head(20))
 print(dataset.describe())
@@ -29,7 +29,7 @@ clf = MLPClassifier(hidden_layer_sizes=(11,20,1),solver='lbfgs',alpha=1e-5,rando
 clf.fit(X_train,y_train)
 
 #Clasificamos un nuevo dato
-DatoNuevo=[[160	,23.5]]
+DatoNuevo=[[0.04666666	,0.9666666]]
 prediccion = clf.predict(DatoNuevo)
 print("\n\nMaquina de vector soporte")
 print("El nuevo dato pertenece a", prediccion)
@@ -86,14 +86,14 @@ DecisionBoundaryDisplay.from_estimator(
 sns.scatterplot(
     x=X[:, 0],
     y=X[:, 1],
-    hue= dataset['clasificacion'] ,
+    hue= dataset['decision'] ,
     palette=cmap_bold,
     alpha=1.0,
     edgecolor="black",)
 sns.scatterplot(
     x=DatoNuevo[0][0],
     y=DatoNuevo[0][1],
-    hue= dataset['clasificacion'] ,
+    hue= dataset['decision'] ,
     palette=cmap_bold,
     alpha=1.0,
     edgecolor="yellow",)
@@ -120,14 +120,14 @@ DecisionBoundaryDisplay.from_estimator(
 sns.scatterplot(
     x=X[:, 0],
     y=X[:, 1],
-    hue= dataset['clasificacion'] ,
+    hue= dataset['decision'] ,
     palette=cmap_bold,
     alpha=1.0,
     edgecolor="black",)
 sns.scatterplot(
     x=DatoNuevo[0][0],
     y=DatoNuevo[0][1],
-    hue= dataset['clasificacion'] ,
+    hue= dataset['decision'] ,
     palette=cmap_bold,
     alpha=1.0,
     edgecolor="yellow",)
@@ -153,14 +153,14 @@ DecisionBoundaryDisplay.from_estimator(
 sns.scatterplot(
     x=X[:, 0],
     y=X[:, 1],
-    hue= dataset['clasificacion'] ,
+    hue= dataset['decision'] ,
     palette=cmap_bold,
     alpha=1.0,
     edgecolor="black",)
 sns.scatterplot(
     x=DatoNuevo[0][0],
     y=DatoNuevo[0][1],
-    hue= dataset['clasificacion'] ,
+    hue= dataset['decision'] ,
     palette=cmap_bold,
     alpha=1.0,
     edgecolor="yellow",)
