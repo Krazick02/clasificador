@@ -1,4 +1,5 @@
 import pandas as pd
+import tkinter as tk
 from pandas.plotting import scatter_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
@@ -28,11 +29,13 @@ clf = MLPClassifier(hidden_layer_sizes=(11,20,1),solver='lbfgs',alpha=1e-5,rando
 clf.fit(X_train,y_train)
 
 #Clasificamos un nuevo dato
-DatoNuevo=[[100	,20.5]]
+DatoNuevo=[[160	,23.5]]
 prediccion = clf.predict(DatoNuevo)
 print("\n\nMaquina de vector soporte")
 print("El nuevo dato pertenece a", prediccion)
 print("El numero de puntos mal etiquetados de un total de %d puntos es: %d" % (X_test.shape[0], (y_test != prediccion).sum()))
+
+mvs = (y_test != prediccion).sum()
 
 
 
@@ -46,6 +49,7 @@ print("\n\nClasificador bayes")
 print("El nuevo dato pertenece a", prediccion)
 print("El numero de puntos mal etiquetados de un total de %d puntos  es: %d" % (X_test.shape[0], (y_test != y_pred).sum()))
 
+bays = (y_test !=  y_pred).sum()
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.70, random_state=73)
@@ -57,6 +61,8 @@ prediccion = lda.predict(DatoNuevo)
 print("\n\nAnalisis de Discriminante Lineal")
 print("El nuevo dato pertenece a", prediccion)
 print("El numero de puntos mal etiquetados de un total de %d puntos es: %d" % (X_test.shape[0], (y_test != y_pred).sum()))
+
+lineal = (y_test !=  y_pred).sum()
 
 ### Create color maps
 cmap_light = ListedColormap(["#FFAAAA", "#AAFFAA"])
@@ -93,7 +99,7 @@ sns.scatterplot(
     edgecolor="yellow",)
     
     
-svmsmap.title("\n\nMaquina de vector soporte" )
+svmsmap.title("Maquina de vector soporte" )
 
 
 
@@ -163,6 +169,36 @@ sns.scatterplot(
 bayesmap.title("Clasificador de Bayes" )
 
 
+
+
+alerta = "Null"
+
+if mvs < bays:
+    if mvs < lineal:
+        alerta = " Maquina de vector soporte"
+if bays < mvs:
+    if bays < lineal:
+        alerta = "Metodo de Bayes"
+if lineal < bays:
+    if lineal < mvs:
+        alerta = "Analisis de Discriminante Lineal"
+
+ventana = tk.Tk()
+ventana.title("Resultado")
+ventana.geometry("500x100")
+ventana.resizable(0,0)
+
+ventana.configure(bg="cyan")
+alerta = "Analisis de Discriminante Lineal"
+
+cabezera = tk.Label(ventana,text = "                   El metodo mas eficaz es el Metodo de :                ",bg="cyan",fg="black")
+msg = tk.Label(ventana,text = alerta,bg="cyan",fg="red")
+cabezera.place(x=70,y=25)
+msg.place(x=170,y=55)
+
 svmsmap.show()
 ldamap.show()
 svmsmap.show()
+
+
+ventana.mainloop()

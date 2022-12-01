@@ -7,7 +7,7 @@ from matplotlib.colors import ListedColormap
 from sklearn import neighbors, datasets
 from sklearn .inspection import DecisionBoundaryDisplay
 from sklearn.neighbors import (NeighborhoodComponentsAnalysis, KNeighborsClassifier)
-s
+
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
